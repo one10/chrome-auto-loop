@@ -1,5 +1,6 @@
 // Auto-loop over URLs
-// ivb, based on chrome ext. examples
+// https://github.com/one10/chrome-auto-loop
+// based on chrome ext. examples
 
 var defaultPause = 3000; // e.g., 3000 is 3 seconds
 
