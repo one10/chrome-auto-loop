@@ -1,0 +1,8 @@
+{
+    "urls": [
+        { "url": "http://www.google.com/", "pause": "4500" }, 
+        { "url": "http://en.wikipedia.org/" },
+        { "url": "http://www.amazon.com/", "pause": "3000" }, 
+        { "url": "http://www.yahoo.com", "pause": "5000" }
+    ]
+}

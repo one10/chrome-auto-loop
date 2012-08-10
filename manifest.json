@@ -1,0 +1,12 @@
+{
+  "name": "Auto-loop over URLs",
+  "version": "0.1",
+  "background": { "scripts": ["background.js"] },
+  "permissions": [
+    "tabs", "*://*/*"
+  ],
+  "browser_action": {
+      "name": "Auto-loop over URLs"
+  },
+  "manifest_version": 2
+}
