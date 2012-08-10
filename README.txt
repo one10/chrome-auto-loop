@@ -14,6 +14,9 @@ Go to chrome://chrome/extensions/ and install. Starts auto-looping through urls.
 right away. Press changing color icon to stop/start. Modify urls.json with your urls and
 timeout values for each if necessary.
 
+This extension provides a quick way to simulate page loads leveraging the real browser
+to also load all images, JS, CSS, etc., making it more realistic than, say, curl or ab.
+
 ================
 Files
 ================
