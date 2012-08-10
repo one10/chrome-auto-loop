@@ -20,7 +20,7 @@ xhr.onreadystatechange = parseJson;
 xhr.open("GET", chrome.extension.getURL(urlJsonFilename), true);
 xhr.send(null);
 
-// kick of perpetual visitUrl with the default interval
+// kick off perpetual visitUrl with the default interval
 var interval = setInterval(visitUrl, defaultPause);
 
 // allow disabling the loop via icon click
@@ -30,7 +30,6 @@ chrome.browserAction.onClicked.addListener(toggleRunning);
 function visitUrl() {
 
     if (isRunning == 1) {
-	    // alert('visiting url: ' + urlJson.urls[i].url);
 	    chrome.tabs.getSelected(null, function(tab) {
 	        chrome.tabs.update(tab.id, {url: urlJson.urls[i].url});
 	    });
@@ -39,7 +38,6 @@ function visitUrl() {
         // re-set the interval to either default or from JSON
         clearInterval(interval);
         if (urlJson.urls[i].pause) {
-	        // alert("resetting interval to one from JSON: " + urlJson.urls[i].pause);
             interval = setInterval(visitUrl, urlJson.urls[i].pause);
         }
         else {
