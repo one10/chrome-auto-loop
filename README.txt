@@ -11,6 +11,8 @@ This extension provides a quick way to simulate page loads - leveraging the real
 browser to also load all images, JS, CSS, etc., making it more realistic than, say, 
 curl or ab.
 
+NB: need to disable cache to ensure pages are really fetched every time
+
 ================
 Install
 ================
@@ -25,6 +27,7 @@ Limitations/Todo
 * doesn't handle POSTs (yet)
 * doesn't do multiple tabs/concurrent requests (yet)
 * doesn't interact with the actual page very much - could use a content script
+* auto-dsable cache
 
 ================
 Files
