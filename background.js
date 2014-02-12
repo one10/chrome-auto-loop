@@ -40,11 +40,11 @@ xhr.send(null);
 chrome.browserAction.onClicked.addListener(toggleRunning);
 
 // kick off perpetual visitUrl 
-visitUrl();
+var interval = setInterval(visitUrl, maxDefaultSleep);
 
 function visitUrl() {
     if (isRunning == 1) {
-	    chrome.tabs.getSelected(null, function(tab) {
+        chrome.tabs.getSelected(null, function(tab) {
             full_url = localStorage["url_prefix"] ? localStorage["url_prefix"].trim() : "";
             full_url += localStorage["query_prefix"] ? localStorage["query_prefix"].trim() : "";
             full_url += urlsObj.urls[curUrlIndex].url;
@@ -62,12 +62,14 @@ function visitUrl() {
             } else {
                 curUrlIndex += 1;
             }
-	        updateIcon();
+            updateIcon();
 
             // re-set the interval to either default or from JSON
-            setTimeout(visitUrl, pause);
-	        chrome.tabs.update(tab.id, {url: full_url});
-	    });
+            clearInterval(interval); 
+            interval = setInterval(visitUrl, pause);
+
+            chrome.tabs.update(tab.id, {url: full_url});
+        });
     }
 }
 
