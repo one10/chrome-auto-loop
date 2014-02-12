@@ -4,11 +4,13 @@
 
 var minDefaultSleep = 2000; // e.g., 3000 is 3 seconds
 var maxDefaultSleep = 4000; // e.g., 3000 is 3 seconds
-if (localStorage["max_default_sleep"]) {
-    maxDefaultSleep = localStorage["max_default_sleep"];
-}
+
 if (localStorage["min_default_sleep"]) {
-    maxDefaultSleep = localStorage["min_default_sleep"];
+    minDefaultSleep = parseInt(localStorage["min_default_sleep"]);
+}
+
+if (localStorage["max_default_sleep"]) {
+    maxDefaultSleep = parseInt(localStorage["max_default_sleep"]);
 }
 
 var urlsObj;
@@ -24,9 +26,8 @@ var firstIcon = 1;
 var lastIcon = 5;
 var currentIcon = firstIcon;
 var curUrlIndex = 0;
-var isRunning = 0;
+var isRunning = 1;
 
-// just in case...
 updateIcon();
 
 // load JSON file with URLs
@@ -35,37 +36,37 @@ xhr.onreadystatechange = parseInput;
 xhr.open("GET", chrome.extension.getURL(urlFilename), true);
 xhr.send(null);
 
-// kick off perpetual visitUrl with the default interval
-var interval = setInterval(visitUrl, maxDefaultSleep);
 // allow disabling the loop via icon click
 chrome.browserAction.onClicked.addListener(toggleRunning);
-// helpers
+
+// kick off perpetual visitUrl 
+visitUrl();
+
 function visitUrl() {
     if (isRunning == 1) {
 	    chrome.tabs.getSelected(null, function(tab) {
             full_url = localStorage["url_prefix"] ? localStorage["url_prefix"].trim() : "";
             full_url += localStorage["query_prefix"] ? localStorage["query_prefix"].trim() : "";
             full_url += urlsObj.urls[curUrlIndex].url;
-        if (urlsObj.urls[curUrlIndex].pause) {
-            pause = urlsObj.urls[curUrlIndex].pause;
-        }
-        else {
-            pause = minDefaultSleep + Math.floor(Math.random() * maxDefaultSleep);
-        }
+        
+            if (urlsObj.urls[curUrlIndex].pause) {
+                pause = urlsObj.urls[curUrlIndex].pause;
+            }
+            else {
+                pause = (minDefaultSleep + Math.floor(Math.random() * maxDefaultSleep));
+            }
 
-        // increment or roll over the URL counter
-        if (curUrlIndex == (urlsObj.urls.length - 1)) {
-            curUrlIndex = 0;
-        } else {
-            curUrlIndex += 1;
-        }
+            // increment or roll over the URL counter
+            if (curUrlIndex == (urlsObj.urls.length - 1)) {
+                curUrlIndex = 0;
+            } else {
+                curUrlIndex += 1;
+            }
+	        updateIcon();
 
-	    updateIcon();
+            // re-set the interval to either default or from JSON
+            setTimeout(visitUrl, pause);
 	        chrome.tabs.update(tab.id, {url: full_url});
-
-        // re-set the interval to either default or from JSON
-            interval = setInterval(visitUrl, pause);
-
 	    });
     }
 }
