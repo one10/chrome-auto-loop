@@ -8,5 +8,6 @@
   "browser_action": {
       "name": "Auto-loop over URLs"
   },
+  "options_page": "options.html",
   "manifest_version": 2
 }
