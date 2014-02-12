@@ -12,6 +12,10 @@ function save_options() {
   var url_prefix = input.value;
   localStorage["url_prefix"] = url_prefix;
 
+  input = document.getElementById("min_default_sleep");
+  var min_default_sleep = input.value;
+  localStorage["min_default_sleep"] = min_default_sleep;
+
   input = document.getElementById("max_default_sleep");
   var max_default_sleep = input.value;
   localStorage["max_default_sleep"] = max_default_sleep;
@@ -45,6 +49,11 @@ function restore_options() {
     return;
   }
 
+  var min_default_sleep = localStorage["min_default_sleep"];
+  if (!min_default_sleep) {
+    return;
+  }
+
   var query_prefix = localStorage["query_prefix"];
   if (!query_prefix) {
     return;
@@ -55,6 +64,9 @@ function restore_options() {
 
   input = document.getElementById("query_prefix");
   input.value = query_prefix;
+
+  input = document.getElementById("min_default_sleep");
+  input.value = min_default_sleep;
 
   input = document.getElementById("max_default_sleep");
   input.value = max_default_sleep;

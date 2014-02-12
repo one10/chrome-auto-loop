@@ -27,13 +27,18 @@ Query prefix:
 e.g.: <div>siteinfo/</div>
 <br>
 
+Min sleep, ms:
+<input type="text" id="min_default_sleep" size="10" />
+<br>
+e.g.: <div>2000</div>
+
 Max sleep, ms:
 <input type="text" id="max_default_sleep" size="10" />
 <br>
 e.g.: <div>4000</div>
 <br>
-(Will sleep between 1s and this randomly, unless otherwise specified in JSON. 
-If empty, set to 4000 ms, i.e. 4 seconds)
+(Will sleep between min and this randomly, unless otherwise specified in JSON. 
+If empty, set to min 2000 min 4000 ms, i.e. 4 seconds)
 <br>
 
 <div id="status"></div>
