@@ -2,7 +2,11 @@
 // https://github.com/one10/chrome-auto-loop
 // based on chrome ext. examples
 
-var defaultPause = 3000; // e.g., 3000 is 3 seconds
+var maxDefaultSleep = 4000; // e.g., 3000 is 3 seconds
+if (localStorage["max_default_sleep"]) {
+    maxDefaultSleep = localStorage["max_default_sleep"];
+}
+
 var urlsObj;
 
 var urlFilename = 'urls';
@@ -28,7 +32,7 @@ xhr.open("GET", chrome.extension.getURL(urlFilename), true);
 xhr.send(null);
 
 // kick off perpetual visitUrl with the default interval
-var interval = setInterval(visitUrl, defaultPause);
+var interval = setInterval(visitUrl, maxDefaultSleep);
 // allow disabling the loop via icon click
 chrome.browserAction.onClicked.addListener(toggleRunning);
 // helpers
@@ -36,7 +40,9 @@ function visitUrl() {
 
     if (isRunning == 1) {
 	    chrome.tabs.getSelected(null, function(tab) {
-            full_url = localStorage["url_prefix"] + localStorage["query_prefix"] + urlsObj.urls[i].url;
+            full_url = localStorage["url_prefix"] ? localStorage["url_prefix"].trim() : "";
+            full_url += localStorage["query_prefix"] ? localStorage["query_prefix"].trim() : "";
+            full_url += urlsObj.urls[i].url;
 	        chrome.tabs.update(tab.id, {url: full_url});
 	    });
 	    updateIcon();
@@ -47,7 +53,9 @@ function visitUrl() {
             interval = setInterval(visitUrl, urlsObj.urls[i].pause);
         }
         else {
-            interval = setInterval(visitUrl, defaultPause);
+            // random sleep up to maxDefaultSleep
+            interval = setInterval(visitUrl, 
+                        1000 + Math.floor(Math.random() * maxDefaultSleep));
         }
 
         // increment or roll over the URL counter

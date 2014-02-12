@@ -13,16 +13,29 @@ Filetype:
  <option value="txt">txt</option>
  <option value="json">json</option>
 </select>
-<br>
+<br><br>
 
 URL prefix:
-<input type="text" id="url_prefix" size="50">
+<input type="text" id="url_prefix" size="50" />
+<br>
+e.g.: <div>http://www.alexa.com/</div>
 <br>
 
 Query prefix:
-<input type="text" id="query_prefix" size="50">
-
+<input type="text" id="query_prefix" size="50" />
 <br>
+e.g.: <div>siteinfo/</div>
+<br>
+
+Max sleep, ms:
+<input type="text" id="max_default_sleep" size="10" />
+<br>
+e.g.: <div>4000</div>
+<br>
+(Will sleep between 1s and this randomly, unless otherwise specified in JSON. 
+If empty, set to 4000 ms, i.e. 4 seconds)
+<br>
+
 <div id="status"></div>
 <button id="save">Save</button>
 </body>

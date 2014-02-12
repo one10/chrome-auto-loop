@@ -12,6 +12,10 @@ function save_options() {
   var url_prefix = input.value;
   localStorage["url_prefix"] = url_prefix;
 
+  input = document.getElementById("max_default_sleep");
+  var max_default_sleep = input.value;
+  localStorage["max_default_sleep"] = max_default_sleep;
+
   input = document.getElementById("query_prefix");
   var query_prefix = input.value;
   localStorage["query_prefix"] = query_prefix;
@@ -36,6 +40,11 @@ function restore_options() {
     return;
   }
 
+  var max_default_sleep = localStorage["max_default_sleep"];
+  if (!max_default_sleep) {
+    return;
+  }
+
   var query_prefix = localStorage["query_prefix"];
   if (!query_prefix) {
     return;
@@ -46,6 +55,9 @@ function restore_options() {
 
   input = document.getElementById("query_prefix");
   input.value = query_prefix;
+
+  input = document.getElementById("max_default_sleep");
+  input.value = max_default_sleep;
 
   var select = document.getElementById("filetype");
   for (var i = 0; i < select.children.length; i++) {
